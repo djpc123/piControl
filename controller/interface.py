@@ -1,6 +1,6 @@
 import cherrypy
 import os, os.path
-from controller.switch_controller import SwitchController
+from switch_controller import SwitchController
 
 
 class AjaxInterface(object):
@@ -20,9 +20,11 @@ class RestInterface(object):
             if vpath.pop(0) == "on":
                 cherrypy.request.params['on'] = "True"
 
-    def index(self, switch="All", on="False"):
+        return self
+
+    def index(self, switch="all", on="False"):
         if bool(on):
-            if switch == "All":
+            if switch == "all":
                 self.controller.switch_on(0)
             else:
                 self.controller.switch_on(int(switch))
@@ -52,4 +54,8 @@ if __name__ == '__main__':
     }
     webapp = AjaxInterface()
     webapp.generator = RestInterface()
+    cherrypy.config.update({
+        'server.socket_host': '0.0.0.0',
+        'server.socket_port': 80
+    })
     cherrypy.quickstart(webapp, '/', conf)
