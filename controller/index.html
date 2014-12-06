@@ -13,7 +13,6 @@
          $("#off").click(function(e) {
            $.post("/api/" + $("select[name='switch']").val() + "/off")
             .done(function(string) {
-               alert(string);
             });
            e.preventDefault();
          });
@@ -21,7 +20,6 @@
          $("#on").click(function(e) {
            $.post("/api/" + $("select[name='switch']").val() + "/on")
             .done(function(string) {
-               alert(string);
             });
            e.preventDefault();
          });
