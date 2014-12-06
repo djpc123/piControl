@@ -1,10 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
+    <link href="/static/css/style.css" rel="stylesheet">
+    <script src="/static/js/jquery-2.1.1.min.js"></script>
     <meta charset="UTF-8">
     <title>Switch Controls</title>
+    <script type="text/javascript">
+       $(document).ready(function() {
+
+         $("#off").click(function(e) {
+           $.post("/api/0/off")
+            .done(function(string) {
+               alert(string);
+            });
+           e.preventDefault();
+         });
+
+         $("#on").click(function(e) {
+           $.post("/api/0/off")
+            .done(function(string) {
+               alert(string);
+            });
+           e.preventDefault();
+         });
+
+       });
+     </script>
 </head>
 <body>
-    In Progress :)
+    <button id="on">Turn all off</button>
+    <button id="off">Turn all on</button>
 </body>
 </html>

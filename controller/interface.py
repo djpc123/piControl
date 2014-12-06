@@ -41,7 +41,7 @@ if __name__ == '__main__':
                 'tools.sessions.on': True,
                 'tools.staticdir.root': os.path.abspath(os.getcwd())
             },
-            '/generator': {
+            '/api': {
                 'request.dispatch': cherrypy.dispatch.MethodDispatcher(),
                 'tools.response_headers.on': True,
                 'tools.response_headers.headers': [('Content-Type', 'text/plain')],
@@ -52,7 +52,7 @@ if __name__ == '__main__':
             }
         }
         webapp = AjaxInterface()
-        webapp.generator = RestInterface(controller)
+        webapp.api = RestInterface(controller)
         cherrypy.config.update({
             'server.socket_host': '0.0.0.0',
             'server.socket_port': 80
