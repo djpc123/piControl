@@ -22,19 +22,13 @@ class RestInterface(object):
 
         return self
 
-    def POST(self, switch="all", on="False"):
+    def POST(self, switch="0", on="False"):
         if on == "True":
-            print "Turning on..."
-            if switch == "all":
-                self.controller.switch_on(0)
-            else:
-                self.controller.switch_on(int(switch))
+            print "Turning on " + switch
+            self.controller.switch_on(int(switch))
         else:
-            print "Turning off..."
-            if switch == "All":
-                self.controller.switch_off(0)
-            else:
-                self.controller.switch_off(int(switch))
+            print "Turning off " + switch
+            self.controller.switch_off(int(switch))
 
         return "Set state of " + switch + " to " + on
 
