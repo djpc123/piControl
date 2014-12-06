@@ -68,10 +68,10 @@ class SwitchController(object):
         GPIO.output(PIN_4, False)
 
     def change_plug_state(self, pin_states):
-        GPIO.output(PIN_1, pin_states[1])
-        GPIO.output(PIN_2, pin_states[2])
-        GPIO.output(PIN_3, pin_states[3])
-        GPIO.output(PIN_4, pin_states[4])
+        GPIO.output(PIN_1, pin_states[0])
+        GPIO.output(PIN_2, pin_states[1])
+        GPIO.output(PIN_3, pin_states[2])
+        GPIO.output(PIN_4, pin_states[3])
         time.sleep(0.1)
         GPIO.output(ENABLE, True)
         time.sleep(0.25)
