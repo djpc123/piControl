@@ -11,7 +11,9 @@ class AjaxInterface(object):
 
 class RestInterface(object):
     exposed = True
-    controller = SwitchController()
+
+    def __init__(self, controller):
+        self.controller = controller
 
     def _cp_dispatch(self, vpath):
         if len(vpath) == 2:
@@ -33,25 +35,26 @@ class RestInterface(object):
         return "Set state of " + switch + " to " + on
 
 if __name__ == '__main__':
-    conf = {
-        '/': {
-            'tools.sessions.on': True,
-            'tools.staticdir.root': os.path.abspath(os.getcwd())
-        },
-        '/generator': {
-            'request.dispatch': cherrypy.dispatch.MethodDispatcher(),
-            'tools.response_headers.on': True,
-            'tools.response_headers.headers': [('Content-Type', 'text/plain')],
-        },
-        '/static': {
-            'tools.staticdir.on': True,
-            'tools.staticdir.dir': './public'
+    with SwitchController() as controller:
+        conf = {
+            '/': {
+                'tools.sessions.on': True,
+                'tools.staticdir.root': os.path.abspath(os.getcwd())
+            },
+            '/generator': {
+                'request.dispatch': cherrypy.dispatch.MethodDispatcher(),
+                'tools.response_headers.on': True,
+                'tools.response_headers.headers': [('Content-Type', 'text/plain')],
+            },
+            '/static': {
+                'tools.staticdir.on': True,
+                'tools.staticdir.dir': './public'
+            }
         }
-    }
-    webapp = AjaxInterface()
-    webapp.generator = RestInterface()
-    cherrypy.config.update({
-        'server.socket_host': '0.0.0.0',
-        'server.socket_port': 80
-    })
-    cherrypy.quickstart(webapp, '/', conf)
+        webapp = AjaxInterface()
+        webapp.generator = RestInterface(controller)
+        cherrypy.config.update({
+            'server.socket_host': '0.0.0.0',
+            'server.socket_port': 80
+        })
+        cherrypy.quickstart(webapp, '/', conf)

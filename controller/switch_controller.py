@@ -67,6 +67,9 @@ class SwitchController(object):
         GPIO.output(PIN_3, False)
         GPIO.output(PIN_4, False)
 
+    def __enter__(self):
+        return self
+
     def change_plug_state(self, pin_states):
         GPIO.output(PIN_4, pin_states[0])
         GPIO.output(PIN_3, pin_states[1])
@@ -104,11 +107,10 @@ class SwitchController(object):
             raw_input('hit return key to send ALL OFF code')
             self.switch_off(0)
 
+    def __exit__(self, type, value, traceback):
+        GPIO.cleanup()
+        print "Cleaned up GPIO"
 
 if __name__ == '__main__':
-    try:
-        controller = SwitchController()
+    with SwitchController() as controller:
         controller.wait_for_input()
-    except KeyboardInterrupt:
-        # Clean up the GPIOs for next time
-        GPIO.cleanup()
