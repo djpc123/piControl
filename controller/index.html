@@ -9,7 +9,7 @@
        $(document).ready(function() {
 
          $("#off").click(function(e) {
-           $.post("/api/0/off")
+           $.post("/api/" + $("select[name='switch']") + "/off")
             .done(function(string) {
                alert(string);
             });
@@ -17,7 +17,7 @@
          });
 
          $("#on").click(function(e) {
-           $.post("/api/0/off")
+           $.post("/api/" + $("select[name='switch']") + "/on")
             .done(function(string) {
                alert(string);
             });
@@ -28,7 +28,12 @@
      </script>
 </head>
 <body>
-    <button id="on">Turn all off</button>
-    <button id="off">Turn all on</button>
+    <select name="switch">
+        <option value="0">All</option>
+        <option value="1">Lights</option>
+        <option value="1">Kettle</option>
+    </select>
+    <button id="off">Turn off</button>
+    <button id="on">Turn on</button>
 </body>
 </html>
